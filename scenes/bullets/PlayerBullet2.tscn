@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/sprites/bullets/AllStarShot.png" type="Texture" id=1]
+[ext_resource path="res://scripts/PlayerBasic.gd" type="Script" id=2]
+[ext_resource path="res://scripts/SpriteRotating.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15.2101, 14.5167 )
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.631373 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 384.594, -1.42167, 31.6989, 33.1692 )
+script = ExtResource( 3 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -0.105117, 0.946007 )
+scale = Vector2( 1.70425, 1.59914 )
+
+[node name="Collision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+shape = SubResource( 1 )
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

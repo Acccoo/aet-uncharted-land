@@ -1,0 +1,1 @@
+- la musica se pausa durante el menu de pausa, pero justo antes de cambiar de escena suena una decima de segundo

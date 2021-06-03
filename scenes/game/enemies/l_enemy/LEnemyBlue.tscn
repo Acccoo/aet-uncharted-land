@@ -1,0 +1,68 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_idle_2.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_idle_0.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_move_0.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_move_1.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_idle_4.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_idle_3.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_idle_1.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_move_2.png" type="Texture" id=8]
+[ext_resource path="res://scripts/EnemyFairy.gd" type="Script" id=9]
+[ext_resource path="res://assets/sprites/enemies/minor/l_enemy/l_enemy_blue/l_enemy_blue_move_3.png" type="Texture" id=10]
+[ext_resource path="res://assets/sound/shooting/player_shooting.wav" type="AudioStream" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "idle",
+"speed": 7.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "move",
+"speed": 8.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+
+[node name="LEnemyBlue" type="Node2D"]
+scale = Vector2( 1.6, 1.6 )
+script = ExtResource( 9 )
+life = 200
+loot_count = 1
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+frame = 4
+playing = true
+
+[node name="ShootTimer" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="LifeTimer" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="." groups=[
+"enemy",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 0, 4.23177 )
+shape = SubResource( 2 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
+position = Vector2( 0.198433, 0.198433 )
+scale = Vector2( 3.48032, 3.48032 )
+
+[node name="ShootSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -23.853
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="timeout" from="ShootTimer" to="." method="_on_ShootTimer_timeout"]
+[connection signal="timeout" from="LifeTimer" to="." method="_on_LifeTimer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

@@ -1,0 +1,203 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/fonts/UI_font.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scripts/PauseMenu.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/bullets/red_star.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/bullets/AllStarShot.png" type="Texture" id=6]
+[ext_resource path="res://assets/sound/se_select00.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/sound/se_pause.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/sound/se_cancel00.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/sound/se_ok00.wav" type="AudioStream" id=10]
+[ext_resource path="res://scenes/UI/SceneChanger.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Theme" id=1]
+
+[sub_resource type="DynamicFont" id=2]
+size = 62
+outline_size = 1
+outline_color = Color( 0.0313726, 0, 0.396078, 1 )
+font_data = ExtResource( 1 )
+
+[node name="Menu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_horizontal_guides_": [ 349.631 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 400.239 ]
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 7
+
+[node name="Popup" type="Popup" parent="CanvasLayer"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0666667, 0.0470588, 0.027451, 0.694118 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Popup"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 100
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="TextureButton" parent="CanvasLayer/Popup/VBoxContainer"]
+margin_top = 175.0
+margin_right = 800.0
+margin_bottom = 225.0
+rect_min_size = Vector2( 0, 50 )
+focus_neighbour_top = NodePath("../Return")
+focus_neighbour_bottom = NodePath("../Restart")
+mouse_filter = 2
+theme = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/Popup/VBoxContainer/Continue" groups=[
+"sprite",
+]]
+visible = false
+modulate = Color( 0.141176, 0.47451, 0.486275, 0.596078 )
+position = Vector2( 399.596, 27.5003 )
+rotation = 1.5708
+scale = Vector2( 4.36739, 19.8574 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 262.166, 128.62, 19.0714, 30.31 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Popup/VBoxContainer/Continue"]
+anchor_left = 0.302314
+anchor_top = -0.107551
+anchor_right = 0.697686
+anchor_bottom = 1.15245
+rect_pivot_offset = Vector2( 151.5, 63 )
+custom_fonts/font = SubResource( 2 )
+text = "CONTINUE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Restart" type="TextureButton" parent="CanvasLayer/Popup/VBoxContainer"]
+margin_top = 325.0
+margin_right = 800.0
+margin_bottom = 375.0
+rect_min_size = Vector2( 0, 50 )
+focus_neighbour_top = NodePath("../Continue")
+focus_neighbour_bottom = NodePath("../Return")
+mouse_filter = 2
+texture_focused = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/Popup/VBoxContainer/Restart" groups=[
+"sprite",
+]]
+visible = false
+modulate = Color( 0.141176, 0.47451, 0.486275, 0.596078 )
+position = Vector2( 398.474, 23.4204 )
+rotation = 1.5708
+scale = Vector2( 4.36739, 19.8574 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 262.166, 128.62, 19.0714, 30.31 )
+
+[node name="Label2" type="Label" parent="CanvasLayer/Popup/VBoxContainer/Restart"]
+anchor_left = 0.32375
+anchor_top = -0.13
+anchor_right = 0.67625
+anchor_bottom = 1.13
+margin_top = -1.90735e-06
+rect_pivot_offset = Vector2( 151.5, 63 )
+custom_fonts/font = SubResource( 2 )
+text = "RESTART"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Return" type="TextureButton" parent="CanvasLayer/Popup/VBoxContainer"]
+margin_top = 475.0
+margin_right = 800.0
+margin_bottom = 525.0
+rect_min_size = Vector2( 0, 50 )
+focus_neighbour_top = NodePath("../Restart")
+focus_neighbour_bottom = NodePath("../Continue")
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/Popup/VBoxContainer/Return" groups=[
+"sprite",
+]]
+visible = false
+modulate = Color( 0.141176, 0.47451, 0.486275, 0.596078 )
+position = Vector2( 401.28, 30.565 )
+rotation = 1.5708
+scale = Vector2( 4.36739, 27.4527 )
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 262.166, 128.62, 19.0714, 30.31 )
+
+[node name="Label3" type="Label" parent="CanvasLayer/Popup/VBoxContainer/Return"]
+anchor_top = -0.0897961
+anchor_right = 1.0
+anchor_bottom = 1.4302
+margin_bottom = -13.0
+rect_pivot_offset = Vector2( 151.5, 63 )
+custom_fonts/font = SubResource( 2 )
+text = "RETURN TO TITLE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ChangeOption" type="AudioStreamPlayer" parent="CanvasLayer/Popup"]
+stream = ExtResource( 7 )
+volume_db = -13.0
+
+[node name="PauseSound" type="AudioStreamPlayer" parent="CanvasLayer/Popup"]
+stream = ExtResource( 8 )
+volume_db = -13.0
+
+[node name="OkSound" type="AudioStreamPlayer" parent="CanvasLayer/Popup"]
+stream = ExtResource( 10 )
+volume_db = -13.0
+
+[node name="CancelSound" type="AudioStreamPlayer" parent="CanvasLayer/Popup"]
+stream = ExtResource( 9 )
+volume_db = -13.0
+
+[node name="SceneChanger" parent="CanvasLayer/Popup" instance=ExtResource( 11 )]
+layer = 6
+[connection signal="focus_entered" from="CanvasLayer/Popup/VBoxContainer/Continue" to="CanvasLayer/Popup" method="_on_Continue_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/Popup/VBoxContainer/Continue" to="CanvasLayer/Popup" method="_on_Continue_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/Popup/VBoxContainer/Continue" to="CanvasLayer/Popup" method="_on_Continue_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/Popup/VBoxContainer/Restart" to="CanvasLayer/Popup" method="_on_Restart_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/Popup/VBoxContainer/Restart" to="CanvasLayer/Popup" method="_on_Restart_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/Popup/VBoxContainer/Restart" to="CanvasLayer/Popup" method="_on_Restart_pressed"]
+[connection signal="focus_entered" from="CanvasLayer/Popup/VBoxContainer/Return" to="CanvasLayer/Popup" method="_on_Return_focus_entered"]
+[connection signal="focus_exited" from="CanvasLayer/Popup/VBoxContainer/Return" to="CanvasLayer/Popup" method="_on_Return_focus_exited"]
+[connection signal="pressed" from="CanvasLayer/Popup/VBoxContainer/Return" to="CanvasLayer/Popup" method="_on_Return_pressed"]

@@ -1,13 +1,31 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/PlayerBasic.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/bullets/AllStarShot.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/effects/big_break_3.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/effects/small_break_1.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/effects/small_break_2.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/effects/big_break_4.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/effects/small_break_3.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/effects/big_break_2.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/effects/big_break_1.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/effects/small_break_4.png" type="Texture" id=10]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "break",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
 radius = 6.3728
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
+score_by_bullet = 10
+damage = 5
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.352941 )
@@ -19,8 +37,20 @@ region_rect = Rect2( 17.044, 239.952, 13.7821, 13.8793 )
 position = Vector2( 0.297638, -0.0496038 )
 scale = Vector2( 0.76189, 0.76685 )
 
-[node name="Collision" type="Area2D" parent="."]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 1 )
+animation = "break"
+frame = 6
+
+[node name="Collision" type="Area2D" parent="." groups=[
+"player_basic",
+"player_bullet",
+]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
+
+[node name="DesintegrationTween" type="Tween" parent="."]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="area_entered" from="Collision" to="." method="_on_Collision_area_entered"]

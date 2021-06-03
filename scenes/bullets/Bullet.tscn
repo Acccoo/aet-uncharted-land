@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/sprites/bullets/AllStarShot.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 4.53937
+radius = 4.40546
 height = 11.8399
 
 [node name="Bullet" type="Node2D"]

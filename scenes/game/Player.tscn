@@ -1,0 +1,144 @@
+[gd_scene load_steps=39 format=2]
+
+[ext_resource path="res://assets/sprites/player/hitbox_circle.png" type="Texture" id=1]
+[ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://scenes/game/BulletGenerator.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/bullets/PlayerBasic.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scripts/PlayerBulletGenerator.gd" type="Script" id=5]
+[ext_resource path="res://assets/sound/shooting/basic_shot.wav" type="AudioStream" id=6]
+[ext_resource path="res://scenes/bullets/PlayerBullet2.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/sprites/player/eff_hitbox.png" type="Texture" id=8]
+[ext_resource path="res://scripts/PlayerHitboxSprite.gd" type="Script" id=9]
+[ext_resource path="res://scripts/SpriteHitboxCircle.gd" type="Script" id=10]
+[ext_resource path="res://assets/sound/player_dead.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/sound/shooting/shot2.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_2.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_7.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_3.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_5.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_6.png" type="Texture" id=17]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_8.png" type="Texture" id=18]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_1.png" type="Texture" id=19]
+[ext_resource path="res://assets/sprites/player/animations/idle/idle_4.png" type="Texture" id=20]
+[ext_resource path="res://assets/sprites/player/animations/move/move_2.png" type="Texture" id=21]
+[ext_resource path="res://assets/sprites/player/animations/move/move_6.png" type="Texture" id=22]
+[ext_resource path="res://assets/sprites/player/animations/move/move_5.png" type="Texture" id=23]
+[ext_resource path="res://assets/sprites/player/animations/move/move_8.png" type="Texture" id=24]
+[ext_resource path="res://assets/sprites/player/animations/move/move_1.png" type="Texture" id=25]
+[ext_resource path="res://assets/sprites/player/animations/move/move_7.png" type="Texture" id=26]
+[ext_resource path="res://assets/sprites/player/animations/move/move_3.png" type="Texture" id=27]
+[ext_resource path="res://assets/sprites/player/animations/move/move_4.png" type="Texture" id=28]
+[ext_resource path="res://assets/sprites/effects/big_break_3.png" type="Texture" id=29]
+[ext_resource path="res://assets/sprites/effects/small_break_1.png" type="Texture" id=30]
+[ext_resource path="res://assets/sprites/effects/small_break_2.png" type="Texture" id=31]
+[ext_resource path="res://assets/sprites/effects/big_break_4.png" type="Texture" id=32]
+[ext_resource path="res://assets/sprites/effects/small_break_3.png" type="Texture" id=33]
+[ext_resource path="res://assets/sprites/effects/big_break_2.png" type="Texture" id=34]
+[ext_resource path="res://assets/sprites/effects/big_break_1.png" type="Texture" id=35]
+[ext_resource path="res://assets/sprites/effects/small_break_4.png" type="Texture" id=36]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 19 ), ExtResource( 13 ), ExtResource( 15 ), ExtResource( 20 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 14 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 19 ), ExtResource( 13 ), null, null, ExtResource( 15 ), ExtResource( 20 ), null, null, ExtResource( 16 ), ExtResource( 17 ), null, null, ExtResource( 14 ), ExtResource( 18 ), null, null, ExtResource( 19 ), ExtResource( 13 ), null, null, ExtResource( 20 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 14 ) ],
+"loop": false,
+"name": "respawning",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 35 ), ExtResource( 34 ), ExtResource( 29 ), ExtResource( 32 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 33 ), ExtResource( 36 ) ],
+"loop": false,
+"name": "dead",
+"speed": 13.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 21 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 23 ), ExtResource( 22 ), ExtResource( 26 ), ExtResource( 24 ) ],
+"loop": false,
+"name": "move",
+"speed": 10.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 16.1001
+
+[node name="Player" type="Node2D"]
+scale = Vector2( 0.2, 0.2 )
+script = ExtResource( 2 )
+shooter_timer_wait_time = 0.1
+
+[node name="ShootingSound1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -6.183
+pitch_scale = 0.76
+
+[node name="ShootingSound2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -10.0
+
+[node name="DeadSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -8.0
+
+[node name="ShootingTimer" type="Timer" parent="."]
+
+[node name="ShootingTimer2" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 6, 6 )
+frames = SubResource( 1 )
+animation = "respawning"
+frame = 25
+playing = true
+
+[node name="Collision" type="Area2D" parent="." groups=[
+"player",
+]]
+
+[node name="HitboxSprite" type="Sprite" parent="Collision"]
+scale = Vector2( 5.5, 5.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 26.1594, 26.2368, 11.5661, 11.6946 )
+script = ExtResource( 10 )
+
+[node name="Sprite" type="Sprite" parent="Collision/HitboxSprite"]
+texture = ExtResource( 8 )
+region_enabled = true
+region_rect = Rect2( -0.587154, -0.985126, 65.136, 65.7493 )
+script = ExtResource( 9 )
+
+[node name="Tween" type="Tween" parent="Collision/HitboxSprite"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+shape = SubResource( 2 )
+
+[node name="Shooters" type="Node2D" parent="."]
+
+[node name="ShootingLevel1" parent="Shooters" instance=ExtResource( 3 )]
+visible = false
+script = ExtResource( 5 )
+bullet_scene = ExtResource( 4 )
+spawn_point_count = 2
+radius = 100
+radius_gap = 0.0
+
+[node name="ShootingLevel2" parent="Shooters" instance=ExtResource( 3 )]
+visible = false
+script = ExtResource( 5 )
+bullet_scene = ExtResource( 7 )
+rotate_speed = 30
+shooter_timer_wait_time = 1
+spawn_point_count = 1
+radius = 80
+radius_gap = 0.7
+[connection signal="player_shooting" from="." to="Shooters/ShootingLevel1" method="_on_Player_player_shooting"]
+[connection signal="player_shooting_2" from="." to="Shooters/ShootingLevel2" method="_on_Player_player_shooting_2"]
+[connection signal="start_focusing" from="." to="Shooters/ShootingLevel1" method="_on_Player_start_focusing"]
+[connection signal="stop_focusing" from="." to="Shooters/ShootingLevel1" method="_on_Player_stop_focusing"]
+[connection signal="timeout" from="ShootingTimer" to="." method="_on_ShootingTimer_timeout"]
+[connection signal="timeout" from="ShootingTimer2" to="." method="_on_ShootingTimer2_timeout"]
+[connection signal="area_entered" from="Collision" to="." method="_on_Collision_area_entered"]
+[connection signal="tween_all_completed" from="Collision/HitboxSprite/Tween" to="Collision/HitboxSprite" method="_on_Tween_tween_all_completed"]

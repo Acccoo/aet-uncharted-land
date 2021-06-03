@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scripts/Bullet.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/bullets/AllStarShot.png" type="Texture" id=2]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.85351
+
+[node name="Bullet" type="Node2D"]
+script = ExtResource( 1 )
+dir = Vector2( 0.5, 1 )
+bullet_speed = 300
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.0415726, -0.0934734 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 108.332, 551.047, 17.5135, 18.3144 )
+
+[node name="Collision" type="Area2D" parent="." groups=[
+"bullet",
+]]
+rotation = 1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collision"]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 0.112405, 0.0693058 )
+rotation = 1.5708
+scale = Vector2( 1.02774, 1.07566 )
+[connection signal="viewport_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_viewport_exited"]

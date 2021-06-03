@@ -1,8 +1,8 @@
 extends Node2D
 
-export var bullet_scene = preload('res://Scenes/bullets/BulletProof.tscn')
-onready var shoot_timer = $ShootTimer
-onready var rotator = $Rotator
+export var bullet_scene = preload('res://Scenes/bullets/Bullet.tscn')
+onready var shoot_timer = $Control/ShootTimer
+onready var rotator = $Control/Rotator
 
 # Declare member variables here.
 export var rotate_speed = 0
@@ -13,9 +13,10 @@ export var radius = 60
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var step = TAU / spawn_point_count
-	
+
 	for i in range(spawn_point_count):
 		var spawn_point = Node2D.new()
+		self.add_child(spawn_point)
 		var pos = Vector2(radius, 0).rotated(step * i)
 		spawn_point.position = pos
 		spawn_point.rotation = pos.angle()

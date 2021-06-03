@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/PickUp.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/pickups/System_Stg_Item.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 55.6934
+
+[node name="Power" type="Node2D"]
+scale = Vector2( 1.1, 1.1 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 39.2061, 0.148035, 17.3484, 17.5774 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[node name="Collision" type="Area2D" parent="." groups=[
+"pickup",
+]]
+
+[node name="PickUp" type="CollisionShape2D" parent="Collision"]
+shape = SubResource( 1 )
+
+[node name="Attraction" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attraction"]
+shape = SubResource( 2 )
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="area_entered" from="Collision" to="." method="_on_Collision_area_entered"]
+[connection signal="area_entered" from="Attraction" to="." method="_on_Attraction_area_entered"]

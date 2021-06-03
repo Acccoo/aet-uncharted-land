@@ -36,7 +36,6 @@ func instantiate_bullet():
 
 func instance_bullet(angle, num, count):
 	var b = bullet_scene.instance()
-	b.hija = false
 	b.position = self.position
 #	b.dir = vector_position.direction_to(Vector2(player.position.x, player.position.y))
 	b.dir = Vector2(cos(angle), sin(angle))
@@ -47,7 +46,6 @@ func instance_bullet(angle, num, count):
 #	b2.rotation = self.rotation * -1
 #	b2.dir = Vector2(-1, 0)
 #	get_parent().add_child(b2)
-
 
 func _on_Timer_timeout():
 #	thread.start(self, "instantiate_bullet")

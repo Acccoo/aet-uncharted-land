@@ -1,6 +1,6 @@
 extends Node2D
 
-enum Type { POWER, SCORE }
+enum Type { POWER, SCORE, EXTEND }
 export(Type) var type
 
 export var speed = 130
@@ -8,7 +8,7 @@ export var dir = Vector2(0, -1)
 
 var speed_variation = 100
 var score = 10000
-var power = 0.05
+var power = 0.12
 var attracted = false
 
 func _process(delta):
@@ -19,11 +19,14 @@ func _process(delta):
 
 func _on_Collision_area_entered(area):
 	if area.is_in_group('player'):
+		$AudioStreamPlayer.play()
 		match type:
 			Type.POWER:
 				PlayerVariables.increase_power(power)
 			Type.SCORE:
 				PlayerVariables.increase_score(score)
+		$Sprite.modulate.a = 0
+		yield($AudioStreamPlayer, "finished")
 		self.queue_free()
 
 func _on_Attraction_area_entered(area):

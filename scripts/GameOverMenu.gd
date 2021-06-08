@@ -1,18 +1,27 @@
 extends Control
 
 onready var buttons = [ $CanvasLayer/VBoxContainer/TryAgain, $CanvasLayer/VBoxContainer/Return ]
+onready var score_text = $CanvasLayer/ScoreLabel
+onready var gameover_text = $CanvasLayer/GameOver
 
 func _ready():
 	var text = "%09d" % PlayerVariables.score
 	text = text.insert(3, ' ')
 	text = text.insert(7, ' ')
 	$CanvasLayer/Score.text = text
+	load_labels()
 	buttons[0].grab_focus()
 
 func _input(event):
 	if event.is_action_pressed("bomb"):
 		$CancelSound.play()
 		return_title()
+
+func load_labels():
+	gameover_text.text = PlayerVariables.global_dictionary.get('label_gameover')
+	score_text.text = PlayerVariables.global_dictionary.get('label_score')
+	buttons[0].get_child(1).text = PlayerVariables.global_dictionary.get('label_retry')
+	buttons[1].get_child(1).text = PlayerVariables.global_dictionary.get('label_return')
 
 func sprite_show(button):
 	var sprite = button.get_node('Sprite')

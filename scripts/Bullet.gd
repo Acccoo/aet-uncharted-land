@@ -11,8 +11,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	self.position += dir * delta * bullet_speed
+	self.position += dir.normalized() * delta * bullet_speed
 	self.rotation += rotation_radians * delta
 
 func _on_VisibilityNotifier2D_screen_exited():
-	pass # Replace with function body.
+	self.queue_free()

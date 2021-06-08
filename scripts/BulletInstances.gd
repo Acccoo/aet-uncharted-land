@@ -2,15 +2,15 @@ extends Node
 
 var power_up = preload('res://scenes/game/loot/Power.tscn')
 var score_up = preload('res://scenes/game/loot/ScoreUp.tscn')
+var extend_up = preload('res://scenes/game/loot/Extend.tscn')
 
 var head_bullets = []
 var arrow_bullets = []
-var pick_ups = [ score_up, power_up ]
+var pick_ups = [ score_up, power_up, extend_up ]
 
 func _ready():
 	list_bullets(head_bullets, 'res://scenes/bullets/head_bullets/')
 	list_bullets(arrow_bullets, 'res://scenes/bullets/arrow_bullets/')
-
 
 func list_bullets(array, path):
 	var dir = Directory.new()

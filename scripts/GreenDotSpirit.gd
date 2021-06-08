@@ -7,10 +7,10 @@ export var score_per_death = 1000
 onready var spawn_tween = $Tween
 onready var death_tween = $Death_tween
 onready var hitbox = $Area2D
+onready var player_scene = get_parent().get_node('Player')
 
-var rotate_speed = 0.5
-var speed = 0
 var dir = Vector2.ZERO
+var speed = 50
 var is_dead = false
 var mutex = Mutex.new()
 var loot = preload('res://scenes/game/loot/ScoreUp.tscn')
@@ -18,28 +18,22 @@ var loot = preload('res://scenes/game/loot/ScoreUp.tscn')
 func _ready():
 	var scale_hitbox = hitbox.scale
 	
-	hitbox.scale = Vector2.ZERO
 	$AnimationPlayer.play("idle")
+	hitbox.scale = Vector2.ZERO
 	spawn_tween.interpolate_property(self, 'modulate:a', 0, 1, 2, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	spawn_tween.start()
 	yield(spawn_tween, "tween_completed")
 	hitbox.scale = scale_hitbox
 	$ShootTimer.start()
 
-func shoot():
-	$AudioStreamPlayer.play()
-	var num = 30
-	for i in range (1, num + 1):
-		instance_bullet((TAU / num) * i)
-
 func _process(delta):
-	rotate_speed += delta
 	self.position += dir * delta * speed
 
-func instance_bullet(angle):
+func shoot():
+	$AudioStreamPlayer.play()
 	var b = bullet.instance()
 	b.position = self.position
-	b.dir = Vector2(cos(angle + rotate_speed), sin(angle + rotate_speed))
+	b.dir = Vector2(player_scene.position.x - self.position.x, player_scene.position.y - self.position.y).normalized()
 	get_parent().add_child(b)
 
 func loose_life(points):
@@ -52,19 +46,12 @@ func loose_life(points):
 func despawn(time):
 	death_tween.interpolate_property(self, 'modulate:a', self.modulate.a, 0, time, Tween.TRANS_BACK, Tween.EASE_OUT)
 	death_tween.start()
-	yield(death_tween, "tween_completed")
-	self.queue_free()
-
-func generate_loot():
-	var item = loot.instance()
-	item.position = self.position
-	get_parent().add_child(item)
 
 func death():
 	var num = 10
 	var b
 	var angle
-
+	
 	generate_loot()
 	PlayerVariables.increase_score(score_per_death)
 	despawn(0.3)
@@ -72,10 +59,15 @@ func death():
 	for i in range (0, num):
 		b = bullet.instance()
 		angle = (TAU / num) * i
-
+		
 		b.position = self.position
 		b.dir = Vector2(cos(angle), sin(angle))
 		get_parent().add_child(b)
+
+func generate_loot():
+	var item = loot.instance()
+	item.position = self.position
+	get_parent().add_child(item)
 
 func _on_VisibilityNotifier2D_screen_exited():
 	self.queue_free()

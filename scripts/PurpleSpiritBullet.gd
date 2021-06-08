@@ -12,5 +12,5 @@ func _process(delta):
 	self.position += dir * delta * bullet_speed
 	bullet_speed -= delta * 120
 
-func _on_VisibilityNotifier2D_viewport_exited(viewport):
-	self.queue_free()
+func _on_VisibilityNotifier2D_screen_exited():
+	pass # Replace with function body.

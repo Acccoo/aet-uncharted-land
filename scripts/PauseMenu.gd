@@ -17,19 +17,16 @@ func _input(event):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	load_labels()
+
+func load_labels():
+	buttons[0].get_node("Label").text = PlayerVariables.global_dictionary.get('label_continue')
+	buttons[1].get_node("Label2").text = PlayerVariables.global_dictionary.get('label_restart')
+	buttons[2].get_node("Label3").text = PlayerVariables.global_dictionary.get('label_return')
 
 func menu_start():
 	buttons[0].grab_focus()
 	$PauseSound.play()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(_delta):
-#	if self.get_tree().paused:
-#		if self.is_visible_in_tree():
-#			if Input.is_action_pressed('pause'):
-#				self.hide()
-#				self.get_tree().paused = false
 
 func sprite_show(button):
 	var sprite = button.get_node('Sprite')

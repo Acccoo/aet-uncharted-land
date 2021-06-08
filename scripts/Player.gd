@@ -22,6 +22,7 @@ export var shooter_timer_wait_time = 0.4
 
 # Signals
 signal player_hitted
+signal player_extend
 signal player_shooting
 signal player_shooting_2
 signal start_focusing
@@ -155,6 +156,9 @@ func _on_Collision_area_entered(area):
 		if !is_invulnerable:
 			emit_signal('player_hitted')
 			transition_to(DEAD)
+	if area.is_in_group('pickup'):
+		if area.is_in_group('extend'):
+			emit_signal("player_extend")
 
 func shoot():
 	if Input.is_action_pressed("shoot"):

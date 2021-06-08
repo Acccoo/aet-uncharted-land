@@ -1,7 +1,5 @@
 extends Node2D
 
-signal enemy_hitted(points)
-
 var dir = Vector2(0, -1)
 onready var tween_desintegration = $DesintegrationTween
 
